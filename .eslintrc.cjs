@@ -23,6 +23,7 @@ module.exports = {
   rules: {
     semi: ['error', 'always'],
     quotes: ['error', 'single'],
-    indent: ['error', 2]
+    indent: ['error', 2],
+    'space-infix-ops': ['error', { 'int32Hint': false }],
   }
 };
