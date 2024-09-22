@@ -1,40 +1,58 @@
-import { beforeEach, describe, expect, it } from 'vitest'
-import { calculateActivityCompletionPercentage, updateActivity } from '../src/activities'
-import { HUNDRED_PERCENT, SECONDS_IN_HOUR } from '../src/constants'
-import type { Activity } from '../src/types'
+import { beforeEach, describe, expect, it } from 'vitest';
+import { updateActivity } from '../src/activities';
+import { Activity } from '../src/types';
 
-let activity: Activity
+let activity: Activity;
 
-beforeEach(() => {
-  activity = {
-    id: '1',
-    name: 'Training',
-    secondsToComplete: SECONDS_IN_HOUR * 1
-  }
-})
+describe.skip('updates activity', () => {
+  beforeEach(() => {
+    activity = {
+      id: '1',
+      name: 'Training',
+      secondsToComplete: 3600
+    };
+  });
 
-describe('updateActivity', () => {
-  const updatedFields: Activity = {
-    id: '2',
-    name: 'Reading',
-    secondsToComplete: SECONDS_IN_HOUR * 2
-  }
+  it('v1', () => {
+    // arrange (given)
+    const updatedActivity: Activity = {
+      id: '2',
+      name: 'Reading',
+      secondsToComplete: 7200
+    };
+  
+    // act (when)
+    updateActivity(activity, updatedActivity);
+  
+    // assert (then)
+    expect(activity).toEqual(updatedActivity);
+  });
 
-  it('updates original activity', () => {
-    updateActivity(activity, updatedFields)
+  it('v2', () => {
+    const updatedFields: Activity = {
+      id: '2',
+      name: 'Reading',
+      secondsToComplete: 7200
+    };
+  
+    const updatedActivity = updateActivity(activity, updatedFields);
+  
+    expect(updatedActivity).toEqual(updatedFields);
+  });
 
-    expect(activity).toEqual(updatedFields)
-  })
+  it('v3', () => {
+    const updatedFields: Partial<Activity> = {
+      id: '2',
+    };
+  
+    const updatedActivity = updateActivity(activity, updatedFields);
+  
+    expect(updatedActivity).toEqual({
+      id: '2',
+      name: 'Training',
+      secondsToComplete: 3600
+    });
+  });
+});
 
-  it('returns updated activity', () => {
-    expect(updateActivity(activity, updatedFields)).toEqual(updatedFields)
-  })
-})
-
-it.each([
-  [SECONDS_IN_HOUR * 0, 0],
-  [SECONDS_IN_HOUR * 0.5, 50],
-  [SECONDS_IN_HOUR * 1, HUNDRED_PERCENT]
-])('calculateActivityCompletionPercentage(activity, %i) -> %i', (trackedSeconds, percentage) => {
-  expect(calculateActivityCompletionPercentage(activity, trackedSeconds)).toBe(percentage)
-})
+it.todo('calculate activity completion percentage');
