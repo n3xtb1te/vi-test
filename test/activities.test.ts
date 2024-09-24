@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it } from 'vitest';
-import { updateActivity } from '../src/activities';
+import { updateActivity, calculateActivityCompletionPercentage } from '../src/activities';
 import { Activity } from '../src/types';
 
 let activity: Activity;
@@ -55,4 +55,30 @@ describe.skip('updates activity', () => {
   });
 });
 
-it.todo('calculate activity completion percentage');
+describe.skip('calculate activity completion percentage', () => {
+  beforeEach(() => {
+    activity = {
+      id: '1',
+      name: 'Training',
+      secondsToComplete: 3600
+    };
+  });
+
+  it('v1', () => {
+    const percentage = calculateActivityCompletionPercentage(activity, 0);
+
+    expect(percentage).toBe(0);
+  });
+
+  it('v2', () => {
+    const percentage = calculateActivityCompletionPercentage(activity, 1800);
+
+    expect(percentage).toBe(50);
+  });
+
+  it('v3', () => {
+    const percentage = calculateActivityCompletionPercentage(activity, 3600);
+    
+    expect(percentage).toBe(100);
+  });
+});
