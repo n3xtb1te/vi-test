@@ -25,6 +25,5 @@ module.exports = {
     quotes: ['error', 'single'],
     indent: ['error', 2],
     'space-infix-ops': ['error', { 'int32Hint': false }],
-    'no-unused-vars': ['error', { 'args': 'none' }],
   }
 };
