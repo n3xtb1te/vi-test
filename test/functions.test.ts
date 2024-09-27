@@ -7,85 +7,92 @@ import {
   id 
 } from '../src/functions';
 import { ProgressColorClass } from '../src/types';
-import { HUNDRED_PERCENT, LOW_PERCENT, MEDIUM_PERCENT } from '../src/constants';
+import { 
+  HUNDRED_PERCENT, 
+  LOW_PERCENT, 
+  MEDIUM_PERCENT, 
+  SECONDS_IN_DAY,
+  SECONDS_IN_HOUR,
+  SECONDS_IN_MINUTE 
+} from '../src/constants';
 
-describe.skip('format seconds', () => {
+describe('format seconds', () => {
   it('v1', () => {
-    const formattedSeconds = formatSeconds(0);
+    const formattedSeconds = formatSeconds(SECONDS_IN_MINUTE * 0);
 
     expect(formattedSeconds).toBe('00:00:00');
   });
 
   it('v2', () => {
-    const formattedSeconds = formatSeconds(60);
+    const formattedSeconds = formatSeconds(SECONDS_IN_MINUTE * 1);
     
     expect(formattedSeconds).toBe('00:01:00');
   });
 
   it('v3', () => {
-    const formattedSeconds = formatSeconds(3600);
+    const formattedSeconds = formatSeconds(SECONDS_IN_HOUR * 1);
         
     expect(formattedSeconds).toBe('01:00:00');
   });
 
   it('v4', () => {
-    const formattedSeconds = formatSeconds(86400);
+    const formattedSeconds = formatSeconds(SECONDS_IN_DAY * 1);
             
     expect(formattedSeconds).toBe('00:00:00');
   });
 });
 
-describe.skip('format seconds with sign', () => {
+describe('format seconds with sign', () => {
   it('v1', () => {
-    const formattedSecondsWithSign = formatSecondsWithSign(0);
+    const formattedSecondsWithSign = formatSecondsWithSign(SECONDS_IN_MINUTE * 0);
 
     expect(formattedSecondsWithSign).toBe('+00:00:00');
   });
 
   it('v2', () => {
-    const formattedSecondsWithSign = formatSecondsWithSign(-0);
+    const formattedSecondsWithSign = formatSecondsWithSign(-SECONDS_IN_MINUTE * 0);
         
     expect(formattedSecondsWithSign).toBe('+00:00:00');
   });
 
   it('v3', () => {
-    const formattedSecondsWithSign = formatSecondsWithSign(60);
+    const formattedSecondsWithSign = formatSecondsWithSign(SECONDS_IN_MINUTE * 1);
                 
     expect(formattedSecondsWithSign).toBe('+00:01:00');
   });
 
   it('v4', () => {
-    const formattedSecondsWithSign = formatSecondsWithSign(-60);
+    const formattedSecondsWithSign = formatSecondsWithSign(-SECONDS_IN_MINUTE * 1);
                         
     expect(formattedSecondsWithSign).toBe('-00:01:00');
   });
 
   it('v5', () => {
-    const formattedSecondsWithSign = formatSecondsWithSign(3600);
+    const formattedSecondsWithSign = formatSecondsWithSign(SECONDS_IN_HOUR * 1);
                                 
     expect(formattedSecondsWithSign).toBe('+01:00:00');
   });
 
   it('v6', () => {
-    const formattedSecondsWithSign = formatSecondsWithSign(-3600);
+    const formattedSecondsWithSign = formatSecondsWithSign(-SECONDS_IN_HOUR * 1);
                                         
     expect(formattedSecondsWithSign).toBe('-01:00:00');
   });
 
   it('v7', () => {
-    const formattedSecondsWithSign = formatSecondsWithSign(86400);
+    const formattedSecondsWithSign = formatSecondsWithSign(SECONDS_IN_DAY * 1);
                                                 
     expect(formattedSecondsWithSign).toBe('+00:00:00');
   });
 
   it('v8', () => {
-    const formattedSecondsWithSign = formatSecondsWithSign(-86400);
+    const formattedSecondsWithSign = formatSecondsWithSign(-SECONDS_IN_DAY * 1);
                                                         
     expect(formattedSecondsWithSign).toBe('-00:00:00');
   });
 });
 
-describe.skip('normalize select value', () => {
+describe('normalize select value', () => {
   it('v1', () => {
     const normalizedSelectValue = normalizeSelectValue(null);
     
@@ -117,7 +124,7 @@ describe.skip('normalize select value', () => {
   });
 });
 
-describe.skip('get progress color class', () => {
+describe('get progress color class', () => {
   it('v1', () => {
     const progressColor = getProgressColorClass(0);
 
@@ -149,7 +156,7 @@ describe.skip('get progress color class', () => {
   });
 });
 
-describe.skip('id', () => {
+describe('id', () => {
   it('v1', () => {
     vi.spyOn(Date, 'now').mockReturnValueOnce(0);
     vi.spyOn(Math, 'random').mockReturnValueOnce(10000);
