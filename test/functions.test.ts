@@ -1,4 +1,4 @@
-import { describe, expect, it, vi, test } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import { 
   formatSeconds, 
   formatSecondsWithSign, 
@@ -17,7 +17,7 @@ import {
 } from '../src/constants';
 
 describe('format seconds', () => {
-  test.each([
+  it.each([
     [SECONDS_IN_MINUTE * 0, '00:00:00'],
     [SECONDS_IN_MINUTE * 1, '00:01:00'],
     [SECONDS_IN_HOUR * 1, '01:00:00'],
@@ -28,7 +28,7 @@ describe('format seconds', () => {
 });
 
 describe('format seconds with sign', () => {
-  test.each([
+  it.each([
     [SECONDS_IN_MINUTE * 0, '+00:00:00'],
     [-SECONDS_IN_MINUTE * 0, '+00:00:00'],
     [SECONDS_IN_MINUTE * 1, '+00:01:00'],
@@ -43,7 +43,7 @@ describe('format seconds with sign', () => {
 });
 
 describe('normalize select value', () => {
-  test.each([
+  it.each([
     [null, null],
     ['string', 'string'],
     ['1', 1],
@@ -55,7 +55,7 @@ describe('normalize select value', () => {
 });
 
 describe('get progress color class', () => {
-  test.each([
+  it.each([
     [0, ProgressColorClass.RED],
     [LOW_PERCENT - 1, ProgressColorClass.RED],
     [MEDIUM_PERCENT - 1, ProgressColorClass.YELLOW],
