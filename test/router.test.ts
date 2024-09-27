@@ -4,13 +4,12 @@ import { normalizePageHash } from '../src/router';
 import { PageName } from '../src/types';
 
 describe('normalize page hash', () => {
-  it('v1 valid page hash', () => {
-    Object.values(PageName).forEach((page) => {
-      window.location.hash = page;
+  it.each(Object.values(PageName))('valid page hash: %s', (page) => {
+    window.location.hash = page;
         
-      expect(normalizePageHash()).toBe(page);
-      expect(window.location.hash).toBe(`#${page}`);
-    });
+    expect(normalizePageHash()).toBe(page);
+    expect(window.location.hash).toBe(`#${page}`);
+
   });
 
 
