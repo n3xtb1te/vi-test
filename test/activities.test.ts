@@ -1,15 +1,16 @@
 import { beforeEach, describe, expect, it } from 'vitest';
 import { updateActivity, calculateActivityCompletionPercentage } from '../src/activities';
 import { Activity } from '../src/types';
+import { FIFTY_PERCENT, HUNDRED_PERCENT, SECONDS_IN_HOUR, ZERO_PERCENT } from '../src/constants';
 
 let activity: Activity;
 
-describe.skip('updates activity', () => {
+describe('updates activity', () => {
   beforeEach(() => {
     activity = {
       id: '1',
       name: 'Training',
-      secondsToComplete: 3600
+      secondsToComplete: SECONDS_IN_HOUR * 1
     };
   });
 
@@ -18,7 +19,7 @@ describe.skip('updates activity', () => {
     const updatedActivity: Activity = {
       id: '2',
       name: 'Reading',
-      secondsToComplete: 7200
+      secondsToComplete: SECONDS_IN_HOUR * 2
     };
   
     // act (when)
@@ -32,7 +33,7 @@ describe.skip('updates activity', () => {
     const updatedFields: Activity = {
       id: '2',
       name: 'Reading',
-      secondsToComplete: 7200
+      secondsToComplete: SECONDS_IN_HOUR * 2
     };
   
     const updatedActivity = updateActivity(activity, updatedFields);
@@ -50,35 +51,35 @@ describe.skip('updates activity', () => {
     expect(updatedActivity).toEqual({
       id: '2',
       name: 'Training',
-      secondsToComplete: 3600
+      secondsToComplete: SECONDS_IN_HOUR * 1
     });
   });
 });
 
-describe.skip('calculate activity completion percentage', () => {
+describe('calculate activity completion percentage', () => {
   beforeEach(() => {
     activity = {
       id: '1',
       name: 'Training',
-      secondsToComplete: 3600
+      secondsToComplete: SECONDS_IN_HOUR * 1
     };
   });
 
   it('v1', () => {
-    const percentage = calculateActivityCompletionPercentage(activity, 0);
+    const percentage = calculateActivityCompletionPercentage(activity, SECONDS_IN_HOUR * 0);
 
-    expect(percentage).toBe(0);
+    expect(percentage).toBe(ZERO_PERCENT);
   });
 
   it('v2', () => {
-    const percentage = calculateActivityCompletionPercentage(activity, 1800);
+    const percentage = calculateActivityCompletionPercentage(activity, SECONDS_IN_HOUR * 0.5);
 
-    expect(percentage).toBe(50);
+    expect(percentage).toBe(FIFTY_PERCENT);
   });
 
   it('v3', () => {
-    const percentage = calculateActivityCompletionPercentage(activity, 3600);
+    const percentage = calculateActivityCompletionPercentage(activity, SECONDS_IN_HOUR * 1);
     
-    expect(percentage).toBe(100);
+    expect(percentage).toBe(HUNDRED_PERCENT);
   });
 });
