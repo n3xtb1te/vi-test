@@ -3,7 +3,7 @@ import { describe, expect, it } from 'vitest';
 import { normalizePageHash } from '../src/router';
 import { PageName } from '../src/types';
 
-describe.skip('normalize page hash', () => {
+describe('normalize page hash', () => {
   it('v1 valid page hash', () => {
     Object.values(PageName).forEach((page) => {
       window.location.hash = page;
