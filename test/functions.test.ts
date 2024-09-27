@@ -1,5 +1,11 @@
 import { describe, expect, it, vi } from 'vitest';
-import { formatSeconds, formatSecondsWithSign, getProgressColorClass, normalizeSelectValue, id } from '../src/functions';
+import { 
+  formatSeconds, 
+  formatSecondsWithSign, 
+  getProgressColorClass, 
+  normalizeSelectValue, 
+  id 
+} from '../src/functions';
 import { ProgressColorClass } from '../src/types';
 import { HUNDRED_PERCENT, LOW_PERCENT, MEDIUM_PERCENT } from '../src/constants';
 
