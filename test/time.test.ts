@@ -37,29 +37,20 @@ describe('end of hour', () => {
 });
 
 describe('is today', () => {
-  it('v1', () => {
-    const date = new Date('2024-01-01');
-
-    expect(isToday(date)).toBe(false);
-  });
-
-  it('v2', () => {
-    const date = new Date();
-    
-    expect(isToday(date)).toBe(true);
+  it.each([
+    [new Date('2024-01-01'), false],
+    [new Date(), true]
+  ])('isToday(%s) -> %s', (date, expected) => {
+    expect(isToday(date)).toBe(expected);
   });
 });
 
 describe('to seconds', () => {
-  it('v1', () => {
-    expect(toSeconds(MILLISECONDS_IN_SECOND * 1)).toBe(1);             
-  });
-
-  it('v2', () => {
-    expect(toSeconds(MILLISECONDS_IN_SECOND * 0)).toBe(0);             
-  });
-
-  it('v3', () => {
-    expect(toSeconds(-MILLISECONDS_IN_SECOND * 1)).toBe(-1);
+  it.each([
+    [MILLISECONDS_IN_SECOND * 1, 1],
+    [MILLISECONDS_IN_SECOND * 0, 0],
+    [-MILLISECONDS_IN_SECOND * 1, -1]
+  ])('toSeconds(%i) -> %i', (milliseconds, expected) => {
+    expect(toSeconds(milliseconds)).toBe(expected);
   });
 });
