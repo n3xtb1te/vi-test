@@ -1,4 +1,4 @@
-import { describe, expect, it, vi } from 'vitest';
+import { describe, expect, it, vi, test } from 'vitest';
 import { 
   formatSeconds, 
   formatSecondsWithSign, 
@@ -17,142 +17,52 @@ import {
 } from '../src/constants';
 
 describe('format seconds', () => {
-  it('v1', () => {
-    const formattedSeconds = formatSeconds(SECONDS_IN_MINUTE * 0);
-
-    expect(formattedSeconds).toBe('00:00:00');
-  });
-
-  it('v2', () => {
-    const formattedSeconds = formatSeconds(SECONDS_IN_MINUTE * 1);
-    
-    expect(formattedSeconds).toBe('00:01:00');
-  });
-
-  it('v3', () => {
-    const formattedSeconds = formatSeconds(SECONDS_IN_HOUR * 1);
-        
-    expect(formattedSeconds).toBe('01:00:00');
-  });
-
-  it('v4', () => {
-    const formattedSeconds = formatSeconds(SECONDS_IN_DAY * 1);
-            
-    expect(formattedSeconds).toBe('00:00:00');
+  test.each([
+    [SECONDS_IN_MINUTE * 0, '00:00:00'],
+    [SECONDS_IN_MINUTE * 1, '00:01:00'],
+    [SECONDS_IN_HOUR * 1, '01:00:00'],
+    [SECONDS_IN_DAY * 1, '00:00:00']
+  ])('formatSeconds(%i) -> %s', (seconds, expected) => {
+    expect(formatSeconds(seconds)).toBe(expected);
   });
 });
 
 describe('format seconds with sign', () => {
-  it('v1', () => {
-    const formattedSecondsWithSign = formatSecondsWithSign(SECONDS_IN_MINUTE * 0);
-
-    expect(formattedSecondsWithSign).toBe('+00:00:00');
-  });
-
-  it('v2', () => {
-    const formattedSecondsWithSign = formatSecondsWithSign(-SECONDS_IN_MINUTE * 0);
-        
-    expect(formattedSecondsWithSign).toBe('+00:00:00');
-  });
-
-  it('v3', () => {
-    const formattedSecondsWithSign = formatSecondsWithSign(SECONDS_IN_MINUTE * 1);
-                
-    expect(formattedSecondsWithSign).toBe('+00:01:00');
-  });
-
-  it('v4', () => {
-    const formattedSecondsWithSign = formatSecondsWithSign(-SECONDS_IN_MINUTE * 1);
-                        
-    expect(formattedSecondsWithSign).toBe('-00:01:00');
-  });
-
-  it('v5', () => {
-    const formattedSecondsWithSign = formatSecondsWithSign(SECONDS_IN_HOUR * 1);
-                                
-    expect(formattedSecondsWithSign).toBe('+01:00:00');
-  });
-
-  it('v6', () => {
-    const formattedSecondsWithSign = formatSecondsWithSign(-SECONDS_IN_HOUR * 1);
-                                        
-    expect(formattedSecondsWithSign).toBe('-01:00:00');
-  });
-
-  it('v7', () => {
-    const formattedSecondsWithSign = formatSecondsWithSign(SECONDS_IN_DAY * 1);
-                                                
-    expect(formattedSecondsWithSign).toBe('+00:00:00');
-  });
-
-  it('v8', () => {
-    const formattedSecondsWithSign = formatSecondsWithSign(-SECONDS_IN_DAY * 1);
-                                                        
-    expect(formattedSecondsWithSign).toBe('-00:00:00');
+  test.each([
+    [SECONDS_IN_MINUTE * 0, '+00:00:00'],
+    [-SECONDS_IN_MINUTE * 0, '+00:00:00'],
+    [SECONDS_IN_MINUTE * 1, '+00:01:00'],
+    [-SECONDS_IN_MINUTE * 1, '-00:01:00'],
+    [SECONDS_IN_HOUR * 1, '+01:00:00'],
+    [-SECONDS_IN_HOUR * 1, '-01:00:00'],
+    [SECONDS_IN_DAY * 1, '+00:00:00'],
+    [-SECONDS_IN_DAY * 1, '-00:00:00']
+  ])('formatSecondsWithSign(%i) -> %s', (seconds, expected) => {
+    expect(formatSecondsWithSign(seconds)).toBe(expected);
   });
 });
 
 describe('normalize select value', () => {
-  it('v1', () => {
-    const normalizedSelectValue = normalizeSelectValue(null);
-    
-    expect(normalizedSelectValue).toBe(null);
-  });
-
-  it('v2', () => {
-    const normalizedSelectValue = normalizeSelectValue('string');
-
-    expect(normalizedSelectValue).toBe('string');
-  });
-
-  it('v3', () => {
-    const normalizedSelectValue = normalizeSelectValue('1');
-    
-    expect(normalizedSelectValue).toBe(1);
-  });
-
-  it('v4', () => {
-    const normalizedSelectValue = normalizeSelectValue('-1');
-                    
-    expect(normalizedSelectValue).toBe(-1);
-  });
-
-  it('v5', () => {
-    const normalizedSelectValue = normalizeSelectValue('1.5string');
-                            
-    expect(normalizedSelectValue).toBe('1.5string');
+  test.each([
+    [null, null],
+    ['string', 'string'],
+    ['1', 1],
+    ['-1', -1],
+    ['1.5string', '1.5string']
+  ])('normalizeSelectValue(%s) -> %s', (value, expected) => {
+    expect(normalizeSelectValue(value)).toBe(expected);
   });
 });
 
 describe('get progress color class', () => {
-  it('v1', () => {
-    const progressColor = getProgressColorClass(0);
-
-    expect(progressColor).toBe(ProgressColorClass.RED);
-  });
-
-  it('v2', () => {
-    const progressColor = getProgressColorClass(LOW_PERCENT - 1);
-    
-    expect(progressColor).toBe(ProgressColorClass.RED);
-  });
-
-  it('v3', () => {
-    const progressColor = getProgressColorClass(MEDIUM_PERCENT - 1);
-        
-    expect(progressColor).toBe(ProgressColorClass.YELLOW);
-  });
-
-  it('v4', () => {
-    const progressColor = getProgressColorClass(HUNDRED_PERCENT - 1);
-            
-    expect(progressColor).toBe(ProgressColorClass.BLUE);
-  });
-
-  it('v5', () => {
-    const progressColor = getProgressColorClass(HUNDRED_PERCENT);
-                    
-    expect(progressColor).toBe(ProgressColorClass.GREEN);
+  test.each([
+    [0, ProgressColorClass.RED],
+    [LOW_PERCENT - 1, ProgressColorClass.RED],
+    [MEDIUM_PERCENT - 1, ProgressColorClass.YELLOW],
+    [HUNDRED_PERCENT - 1, ProgressColorClass.BLUE],
+    [HUNDRED_PERCENT, ProgressColorClass.GREEN]
+  ])('getProgressColorClass(%i) -> %s', (percentage, expected) => {
+    expect(getProgressColorClass(percentage)).toBe(expected);
   });
 });
 
