@@ -1,7 +1,8 @@
 import { describe, it, expect, vi } from 'vitest';
 import { today, tomorrow, endOfHour, isToday, toSeconds } from '../src/time';
+import { MILLISECONDS_IN_SECOND } from '../src/constants';
 
-describe.skip('today', () => {
+describe('today', () => {
   it('v1', () => {
     const date = new Date('1990-01-01');
 
@@ -13,7 +14,7 @@ describe.skip('today', () => {
   });
 });
 
-describe.skip('tomorrow', () => {
+describe('tomorrow', () => {
   it('v1', () => {
     const date = new Date('1990-01-01');
     const tomorrowDate = new Date('1990-01-02');
@@ -26,7 +27,7 @@ describe.skip('tomorrow', () => {
   });
 });
 
-describe.skip('end of hour', () => {
+describe('end of hour', () => {
   it('v1', () => {
     const date = new Date('2024-04-10T10:15:00');
     const endOfHourDate = new Date('2024-04-10T11:00:00');
@@ -35,7 +36,7 @@ describe.skip('end of hour', () => {
   });
 });
 
-describe.skip('is today', () => {
+describe('is today', () => {
   it('v1', () => {
     const date = new Date('2024-01-01');
 
@@ -49,16 +50,16 @@ describe.skip('is today', () => {
   });
 });
 
-describe.skip('to seconds', () => {
+describe('to seconds', () => {
   it('v1', () => {
-    expect(toSeconds(1000)).toBe(1);             
+    expect(toSeconds(MILLISECONDS_IN_SECOND * 1)).toBe(1);             
   });
 
   it('v2', () => {
-    expect(toSeconds(0)).toBe(0);             
+    expect(toSeconds(MILLISECONDS_IN_SECOND * 0)).toBe(0);             
   });
 
   it('v3', () => {
-    expect(toSeconds(-1000)).toBe(-1);
+    expect(toSeconds(-MILLISECONDS_IN_SECOND * 1)).toBe(-1);
   });
 });
