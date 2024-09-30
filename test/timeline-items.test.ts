@@ -72,26 +72,30 @@ describe('reset timeline item activities', () => {
     
     resetTimelineItemActivities(timelineItems, trainingActivity);
 
-    expect(timelineItems).toEqual([
-      {
-        hour: 1,
-        activityId: null,
-        activitySeconds: SECONDS_IN_HOUR * 0,
-        isActive: false
-      },
-      {
-        hour: date.getHours() as Hour,
-        activityId: null,
-        activitySeconds: SECONDS_IN_HOUR * 2,
-        isActive: true
-      },
-      {
-        hour: 3,
-        activityId: readingActivity.id,
-        activitySeconds: SECONDS_IN_HOUR * 2,
-        isActive: true
-      }
-    ]);
+    expect(timelineItems).toMatchSnapshot();
+
+    expect(timelineItems).toMatchInlineSnapshot(`
+      [
+        {
+          "activityId": null,
+          "activitySeconds": 0,
+          "hour": 1,
+          "isActive": false,
+        },
+        {
+          "activityId": null,
+          "activitySeconds": 7200,
+          "hour": 2,
+          "isActive": true,
+        },
+        {
+          "activityId": "2",
+          "activitySeconds": 7200,
+          "hour": 3,
+          "isActive": true,
+        },
+      ]
+    `);
 
     vi.useRealTimers();
   });
