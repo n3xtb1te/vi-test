@@ -4,7 +4,7 @@ import {
   resetTimelineItemActivities, 
   calculateTrackedActivitySeconds 
 } from '../src/timeline-items';
-import { Activity, Hour, TimelineItem } from '../src/types';
+import { Activity, TimelineItem } from '../src/types';
 import { SECONDS_IN_HOUR } from '../src/constants';
 
 describe('update timeline item', () => {
